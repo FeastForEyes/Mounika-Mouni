@@ -336,7 +336,7 @@
     function displayActivityMessage(activity, value) {
       const messageContainer = document.getElementById('activity-message-container');
       const messageElement = document.getElementById('activity-message');
-      messageElement.textContent = `${activity} updated to ${value}`;
+      
       messageContainer.classList.remove('hidden');
       setTimeout(() => {
         messageContainer.classList.add('hidden');
