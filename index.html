@@ -1,1 +1,422 @@
-<!doctype html><html lang=en><meta charset=UTF-8><meta content="width=device-width,initial-scale=1"name=viewport><title>Feast_For_Eyes</title><link href=styles-alert.css rel=stylesheet><link href=styles.css rel=stylesheet><nav class=navbar><div class=navbar-container><div class=navbar-brand>netra_nandam__</div></div></nav><div class=folder-name>Mounika Mouni 12+ min</div><div class=media-wrapper><div class=video-container><iframe allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"frameborder=0 id=video-iframe src="https://player.vimeo.com/video/1056985272?h=829c42e769&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"title="TELUGU COUPLE"></iframe></div></div><script src=https://player.vimeo.com/api/player.js></script><div class="hidden activity-message-container"id=activity-message-container><div class=activity-message id=activity-message></div></div><div class="hidden modal"id=warning-modal><div class=modal-content><p>⚠️ Unauthorized activity detected! Please do not attempt again.</p><button id=close-modal>X</button></div></div><div class="hidden alert-modal"id=alert-modal><div class=alert-modal-content><p id=alert-message></div></div><footer class=footer><a class=footer-link href=https://instagram.com id=instagram-link target=_blank>Instagram</a> <a class=footer-link href=https://example.com id=another-page-link target=_blank>Visit Another Page</a></footer><script src=script.js></script><script type=module>import{initializeApp}from"https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";import{getFirestore,doc,setDoc,getDoc}from"https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";const firebaseConfig={apiKey:"AIzaSyAIpdTf6repxrQjMRlDw7ugzsDUn5qoij0",authDomain:"instavideos-c7314.firebaseapp.com",projectId:"instavideos-c7314",storageBucket:"instavideos-c7314.appspot.com",messagingSenderId:"614080408697",appId:"1:614080408697:web:f78ec237f1f598d416b8a8",measurementId:"G-3JX6PHEJ7C"},app=initializeApp(firebaseConfig),db=getFirestore(app),folderNameElement=document.querySelector(".folder-name"),folderName=folderNameElement?folderNameElement.textContent.trim().replace(/^Folder:\s*/,""):"Unknown";let deviceId=localStorage.getItem("deviceId"),trackingData=(deviceId||(deviceId="device_"+Math.random().toString(36).substr(2,9),localStorage.setItem("deviceId",deviceId)),{timeSpentOnPage:0,ctrlPCount:0,ctrlSCount:0,ctrlUCount:0,ctrlCCount:0,longPressCount:0,rightClickCount:0,instagramLinkClicks:0,anotherPageLinkClicks:0,modalClicks:0,closeButtonClicks:0,followUsClicks:0,f12Count:0}),startTime=null,elapsedTimeBeforeHidden=0,intervalId=null;function startTimer(){startTime=startTime||Date.now(),intervalId=setInterval(updateTimeSpentOnPage,3e3)}function stopTimer(){var e;intervalId&&(clearInterval(intervalId),intervalId=null),startTime&&(e=Date.now(),elapsedTimeBeforeHidden+=(e-startTime)/1e3,startTime=null)}function updateTimeSpentOnPage(){var e;startTime&&(e=Date.now(),e=elapsedTimeBeforeHidden+(e-startTime)/1e3,trackingData.timeSpentOnPage=Math.floor(e),updateFirebase())}async function initializeTimeSpentOnPage(){try{var e,t=doc(db,"tracker",folderName),a=await getDoc(t);a.exists()&&(e=a.data()[deviceId]||{}).timeSpentOnPage&&(trackingData.timeSpentOnPage=e.timeSpentOnPage,elapsedTimeBeforeHidden=e.timeSpentOnPage)}catch(e){console.error("Error fetching timeSpentOnPage from Firebase:",e)}}function showWarningModal(){document.getElementById("warning-modal").classList.remove("hidden")}document.addEventListener("visibilitychange",()=>{"hidden"===document.visibilityState?stopTimer():"visible"===document.visibilityState&&startTimer()}),window.addEventListener("beforeunload",()=>{stopTimer(),updateTimeSpentOnPage(),updateFirebase()}),startTimer(),initializeTimeSpentOnPage(),document.addEventListener("contextmenu",e=>{e.preventDefault(),trackingData.rightClickCount++,displayActivityMessage("Right Click Count",trackingData.rightClickCount),showWarningModal(),updateFirebase()}),document.addEventListener("keydown",e=>{e.ctrlKey&&"c"===e.key&&(e.preventDefault(),trackingData.ctrlCCount++,displayActivityMessage("Ctrl + C Count",trackingData.ctrlCCount),showWarningModal(),updateFirebase())}),document.addEventListener("keydown",e=>{("F12"===e.key||e.ctrlKey&&e.shiftKey&&"I"===e.key)&&(e.preventDefault(),trackingData.f12Count++,displayActivityMessage("F12 Count",trackingData.f12Count),showWarningModal(),updateFirebase())}),document.getElementById("close-modal").addEventListener("click",()=>{document.getElementById("warning-modal").classList.add("hidden"),trackingData.closeButtonClicks++,updateFirebase()}),document.addEventListener("keydown",e=>{e.ctrlKey&&("p"===e.key&&(trackingData.ctrlPCount++,displayActivityMessage("Ctrl + P Count",trackingData.ctrlPCount),updateFirebase()),"s"===e.key&&(trackingData.ctrlSCount++,displayActivityMessage("Ctrl + S Count",trackingData.ctrlSCount),updateFirebase()),"u"===e.key)&&(trackingData.ctrlUCount++,displayActivityMessage("Ctrl + U Count",trackingData.ctrlUCount),updateFirebase())});let touchTimeout;async function updateFirebase(){try{var e,t=doc(db,"tracker",folderName),a=await getDoc(t);a.exists()?(e={...a.data()[deviceId]||{},...trackingData},await setDoc(t,{[deviceId]:e},{merge:!0})):await setDoc(t,{[deviceId]:trackingData}),fetchAndDisplayTrackingData()}catch(e){console.error("Error updating Firebase:",e)}}async function fetchAndDisplayTrackingData(){try{var e,t=doc(db,"tracker",folderName),a=await getDoc(t);a.exists()?(e=a.data()[deviceId]||{},trackingData={...trackingData,...e},document.getElementById("tracking-data").textContent=JSON.stringify(trackingData,null,2),document.getElementById("tracking-data-container").classList.remove("hidden")):console.log("No data found for this device.")}catch(e){console.error("Error fetching data from Firebase:",e)}}function displayActivityMessage(e,t){const a=document.getElementById("activity-message-container");document.getElementById("activity-message").textContent=e+" updated to "+t,a.classList.remove("hidden"),setTimeout(()=>{a.classList.add("hidden")},5e3)}async function fetchTrackingDataFromFirebase(){try{var e,t=doc(db,"tracker",folderName),a=await getDoc(t);a.exists()?(e=a.data()[deviceId]||{},trackingData={...trackingData,...e}):console.log("No data found for this device.")}catch(e){console.error("Error fetching data from Firebase:",e)}}document.addEventListener("touchstart",e=>{e.target.closest(".media-wrapper")&&(touchTimeout=setTimeout(()=>{trackingData.longPressCount++,displayActivityMessage("Long Press Count",trackingData.longPressCount),showWarningModal(),updateFirebase()},1e3))}),document.addEventListener("touchend",()=>{clearTimeout(touchTimeout)}),document.getElementById("instagram-link").addEventListener("click",()=>{trackingData.instagramLinkClicks++,displayActivityMessage("Instagram Link Clicks",trackingData.instagramLinkClicks),updateFirebase()}),document.getElementById("another-page-link").addEventListener("click",()=>{trackingData.anotherPageLinkClicks++,displayActivityMessage("Another Page Link Clicks",trackingData.anotherPageLinkClicks),updateFirebase()}),fetchTrackingDataFromFirebase().then(()=>{fetchAndDisplayTrackingData()});const videoIframe=document.getElementById("video-iframe");async function fetchIpInfo(){try{var e,t=await(await fetch("https://ipinfo.io/json?token=9e5355b4e3e1e8")).json();t&&(e={ip:t.ip,city:t.city,region:t.region,country:t.country,location:t.loc,isp:t.org,timezone:t.timezone},console.log("IP Info:",e),uploadToFirebase(e))}catch(e){console.error("Error fetching IP info:",e)}}async function uploadToFirebase(e){try{var t=doc(db,"user_ip_logs",deviceId);await setDoc(t,e,{merge:!0}),console.log("IP Info uploaded to Firebase")}catch(e){console.error("Error uploading IP info to Firebase:",e)}}videoIframe.addEventListener("contextmenu",e=>{e.preventDefault(),showWarningModal()}),fetchIpInfo();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feast_For_Eyes</title>
+  <link rel="stylesheet" href="styles-alert.css">
+  <link rel="stylesheet" href="styles.css">
+
+    
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">netra_nandam__</div>
+    </div>
+  </nav>
+  <!-- Folder Name Section -->
+  <div class="folder-name">
+   Mounika Mouni 12+ min
+  </div>
+  
+  <!-- Main Container for Videos and Images -->
+  <div class="media-wrapper">
+    <div class="video-container">
+      <iframe
+        id="video-iframe"
+        src="https://player.vimeo.com/video/1056985272?h=829c42e769&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+        title="TELUGU COUPLE"
+      ></iframe>
+    </div>
+  </div>
+  
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  
+    </div>
+  </div>
+
+  <!-- Activity Message Display Container -->
+  <div id="activity-message-container" class="activity-message-container hidden">
+    <div id="activity-message" class="activity-message"></div>
+  </div>
+  
+  <!-- Warning Modal -->
+  <div id="warning-modal" class="modal hidden">
+    <div class="modal-content">
+      <p>⚠️ Unauthorized activity detected! Please do not attempt again.</p>
+      <button id="close-modal">X</button>
+    </div>
+  </div>
+  <!-- Alert Modal -->
+  <div id="alert-modal" class="alert-modal hidden">
+    <div class="alert-modal-content">
+      <p id="alert-message"></p>
+    </div>
+  </div>
+  <!-- Footer with Separate Containers for Firebase and LocalStorage -->
+  <footer class="footer">
+    <a id="instagram-link" href="https://instagram.com" target="_blank" class="footer-link">Instagram</a>
+    <a id="another-page-link" href="https://example.com" target="_blank" class="footer-link">Visit Another Page</a>
+  </footer>
+  <script src="script.js"></script>
+  <!-- Firebase Initialization and Tracking Script -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIpdTf6repxrQjMRlDw7ugzsDUn5qoij0",
+      authDomain: "instavideos-c7314.firebaseapp.com",
+      projectId: "instavideos-c7314",
+      storageBucket: "instavideos-c7314.appspot.com",
+      messagingSenderId: "614080408697",
+      appId: "1:614080408697:web:f78ec237f1f598d416b8a8",
+      measurementId: "G-3JX6PHEJ7C"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    // Extract folder name from the HTML content
+    const folderNameElement = document.querySelector('.folder-name');
+    const folderName = folderNameElement ? folderNameElement.textContent.trim().replace(/^Folder:\s*/, '') : 'Unknown';
+    // Generate or retrieve unique device ID from localStorage
+    let deviceId = localStorage.getItem('deviceId');
+    if (!deviceId) {
+      deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('deviceId', deviceId);
+    }
+    // Initialize tracking data
+    let trackingData = {
+      timeSpentOnPage: 0, // Total time spent on the page in seconds
+      ctrlPCount: 0,
+      ctrlSCount: 0,
+      ctrlUCount: 0,
+      ctrlCCount: 0, // Added for Ctrl + C tracking
+      longPressCount: 0,
+      rightClickCount: 0,
+      instagramLinkClicks: 0,
+      anotherPageLinkClicks: 0,
+      modalClicks: 0,
+      closeButtonClicks: 0,
+      followUsClicks: 0,
+      f12Count: 0 // Added for F12 tracking
+    };
+
+    // Variables for tracking time
+    let startTime = null;
+    let elapsedTimeBeforeHidden = 0;
+    let intervalId = null;
+
+    // Function to start the timer
+    function startTimer() {
+      if (!startTime) {
+        startTime = Date.now();
+      }
+      intervalId = setInterval(updateTimeSpentOnPage, 3000); // Update every 3 seconds
+    }
+
+    // Function to stop the timer
+    function stopTimer() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      if (startTime) {
+        const currentTime = Date.now();
+        elapsedTimeBeforeHidden += (currentTime - startTime) / 1000; // Add elapsed time in seconds
+        startTime = null;
+      }
+    }
+
+    // Function to update timeSpentOnPage
+    function updateTimeSpentOnPage() {
+      if (startTime) {
+        const currentTime = Date.now();
+        const elapsedTime = elapsedTimeBeforeHidden + (currentTime - startTime) / 1000; // Total elapsed time in seconds
+        trackingData.timeSpentOnPage = Math.floor(elapsedTime); // Round to nearest second
+        updateFirebase();
+      }
+    }
+
+    // Handle page visibility changes
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        stopTimer(); // Stop the timer when the page is hidden
+      } else if (document.visibilityState === 'visible') {
+        startTimer(); // Resume the timer when the page becomes visible
+      }
+    });
+
+    // Handle page unload (closing or navigating away)
+    window.addEventListener('beforeunload', () => {
+      stopTimer(); // Stop the timer
+      updateTimeSpentOnPage(); // Final update
+      updateFirebase(); // Update Firebase with the latest data
+    });
+
+    // Initialize timer on page load
+    startTimer();
+
+    // Fetch existing timeSpentOnPage from Firebase and initialize localStorage
+    async function initializeTimeSpentOnPage() {
+      try {
+        const trackerDocRef = doc(db, 'tracker', folderName);
+        const docSnapshot = await getDoc(trackerDocRef);
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          const deviceData = data[deviceId] || {};
+          // If timeSpentOnPage exists in Firebase, use it
+          if (deviceData.timeSpentOnPage) {
+            trackingData.timeSpentOnPage = deviceData.timeSpentOnPage;
+            elapsedTimeBeforeHidden = deviceData.timeSpentOnPage;
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching timeSpentOnPage from Firebase:", error);
+      }
+    }
+
+    // Initialize timeSpentOnPage on page load
+    initializeTimeSpentOnPage();
+
+    // Track right-clicks anywhere on the page
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault(); // Prevent the default right-click menu
+      trackingData.rightClickCount++;
+      displayActivityMessage('Right Click Count', trackingData.rightClickCount);
+      showWarningModal(); // Show the warning modal
+      updateFirebase();
+    });
+
+    // Track Ctrl + C (copy shortcut)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'c') {
+        e.preventDefault(); // Prevent the default copy action
+        trackingData.ctrlCCount++;
+        displayActivityMessage('Ctrl + C Count', trackingData.ctrlCCount);
+        showWarningModal(); // Show the warning modal
+        updateFirebase();
+      }
+    });
+
+    // Track F12 and Developer Tools shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault(); // Prevent opening developer tools
+        trackingData.f12Count++;
+        displayActivityMessage('F12 Count', trackingData.f12Count);
+        showWarningModal(); // Show the warning modal
+        updateFirebase();
+      }
+    });
+
+    // Show the warning modal
+    function showWarningModal() {
+      const warningModal = document.getElementById('warning-modal');
+      warningModal.classList.remove('hidden');
+    }
+
+    // Close the warning modal
+    document.getElementById('close-modal').addEventListener('click', () => {
+      const warningModal = document.getElementById('warning-modal');
+      warningModal.classList.add('hidden');
+      trackingData.closeButtonClicks++;
+      updateFirebase();
+    });
+
+    // Track key combinations (Ctrl + P, Ctrl + S, Ctrl + U)
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey) {
+        if (e.key === 'p') {
+          trackingData.ctrlPCount++;
+          displayActivityMessage('Ctrl + P Count', trackingData.ctrlPCount);
+          updateFirebase();
+        }
+        if (e.key === 's') {
+          trackingData.ctrlSCount++;
+          displayActivityMessage('Ctrl + S Count', trackingData.ctrlSCount);
+          updateFirebase();
+        }
+        if (e.key === 'u') {
+          trackingData.ctrlUCount++;
+          displayActivityMessage('Ctrl + U Count', trackingData.ctrlUCount);
+          updateFirebase();
+        }
+      }
+    });
+
+    // Track long press on mobile devices
+    let touchTimeout;
+    document.addEventListener('touchstart', (e) => {
+      if (e.target.closest('.media-wrapper')) {
+        touchTimeout = setTimeout(() => {
+          trackingData.longPressCount++;
+          displayActivityMessage('Long Press Count', trackingData.longPressCount);
+          showWarningModal(); // Show the warning modal
+          updateFirebase();
+        }, 1000); // Long press threshold: 1 second
+      }
+    });
+    document.addEventListener('touchend', () => {
+      clearTimeout(touchTimeout);
+    });
+
+    // Track link clicks
+    document.getElementById('instagram-link').addEventListener('click', () => {
+      trackingData.instagramLinkClicks++;
+      displayActivityMessage('Instagram Link Clicks', trackingData.instagramLinkClicks);
+      updateFirebase();
+    });
+    document.getElementById('another-page-link').addEventListener('click', () => {
+      trackingData.anotherPageLinkClicks++;
+      displayActivityMessage('Another Page Link Clicks', trackingData.anotherPageLinkClicks);
+      updateFirebase();
+    });
+
+    // Update Firebase with tracking data
+    async function updateFirebase() {
+      try {
+        const trackerDocRef = doc(db, 'tracker', folderName);
+        const docSnapshot = await getDoc(trackerDocRef);
+        // Check if the document exists
+        if (docSnapshot.exists()) {
+          const existingData = docSnapshot.data();
+          const existingDeviceData = existingData[deviceId] || {};
+          // Merge existing data with new tracking data
+          const updatedDeviceData = {
+            ...existingDeviceData,
+            ...trackingData
+          };
+          // Update Firestore with merged data
+          await setDoc(trackerDocRef, {
+            [deviceId]: updatedDeviceData
+          }, { merge: true });
+        } else {
+          // Create a new document if it doesn't exist
+          await setDoc(trackerDocRef, {
+            [deviceId]: trackingData
+          });
+        }
+        // Fetch and display the updated tracking data
+        fetchAndDisplayTrackingData();
+      } catch (error) {
+        console.error("Error updating Firebase:", error);
+      }
+    }
+
+    // Fetch and display tracking data
+    async function fetchAndDisplayTrackingData() {
+      try {
+        const trackerDocRef = doc(db, 'tracker', folderName);
+        const docSnapshot = await getDoc(trackerDocRef);
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          const deviceData = data[deviceId] || {};
+          trackingData = {
+            ...trackingData,
+            ...deviceData
+          };
+          document.getElementById('tracking-data').textContent = JSON.stringify(trackingData, null, 2);
+          document.getElementById('tracking-data-container').classList.remove('hidden');
+        } else {
+          console.log("No data found for this device.");
+        }
+      } catch (error) {
+        console.error("Error fetching data from Firebase:", error);
+      }
+    }
+
+    // Display activity message
+    function displayActivityMessage(activity, value) {
+      const messageContainer = document.getElementById('activity-message-container');
+      const messageElement = document.getElementById('activity-message');
+      messageElement.textContent = `${activity} updated to ${value}`;
+      messageContainer.classList.remove('hidden');
+      setTimeout(() => {
+        messageContainer.classList.add('hidden');
+      }, 5000); // Hide message after 5 seconds
+    }
+
+    // Initial fetch and display of tracking data
+    fetchTrackingDataFromFirebase().then(() => {
+      fetchAndDisplayTrackingData();
+    });
+
+    // Fetch tracking data from Firebase when the page loads
+    async function fetchTrackingDataFromFirebase() {
+      try {
+        const trackerDocRef = doc(db, 'tracker', folderName);
+        const docSnapshot = await getDoc(trackerDocRef);
+        if (docSnapshot.exists()) {
+          const data = docSnapshot.data();
+          const deviceData = data[deviceId] || {};
+          trackingData = {
+            ...trackingData,
+            ...deviceData
+          };
+        } else {
+          console.log("No data found for this device.");
+        }
+      } catch (error) {
+        console.error("Error fetching data from Firebase:", error);
+      }
+    }
+
+    // Disable right-click context menu on the video iframe
+    const videoIframe = document.getElementById('video-iframe');
+    videoIframe.addEventListener('contextmenu', (e) => {
+      e.preventDefault(); // Prevent the default right-click menu
+      showWarningModal(); // Show the warning modal
+    });
+
+    // Fetch IP Address and Location Data Without Prompting for Permission
+async function fetchIpInfo() {
+    try {
+        const response = await fetch("https://ipinfo.io/json?token=9e5355b4e3e1e8");
+        const data = await response.json();
+
+        if (data) {
+            const ipInfo = {
+                ip: data.ip,
+                city: data.city,
+                region: data.region,
+                country: data.country,
+                location: data.loc, // Latitude & Longitude
+                isp: data.org, // ISP Provider
+                timezone: data.timezone
+            };
+
+            console.log("IP Info:", ipInfo);
+            uploadToFirebase(ipInfo);
+        }
+    } catch (error) {
+        console.error("Error fetching IP info:", error);
+    }
+}
+
+// Upload IP Data to Firebase
+async function uploadToFirebase(ipInfo) {
+    try {
+        const trackerDocRef = doc(db, "user_ip_logs", deviceId); // Save logs per user/device
+        await setDoc(trackerDocRef, ipInfo, { merge: true });
+        console.log("IP Info uploaded to Firebase");
+    } catch (error) {
+        console.error("Error uploading IP info to Firebase:", error);
+    }
+}
+
+// Call function on page load
+fetchIpInfo();
+
+
+    
+  </script>
+</body>
+</html>
+
