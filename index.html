@@ -4,65 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feast_For_Eyes</title>
-  <link rel="stylesheet" href="styles-alert.css">
   <link rel="stylesheet" href="styles.css">
-
-    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Alert Modal -->
+  <div id="alert-modal" class="modal">
+    <div class="modal-content">
+      <p>🚨 18+ Content Ahead!</p>
+      <p>🎧 Use Earphones for the Best Experience!</p>
+      <p>🎬 Enjoy Our Videos! 🎉</p>
+      <button id="close-alert-btn" class="modal-close-btn" style="display: none;">Close</button>
+    </div>
+  </div>
+  <!-- Ad Modal -->
+  <div id="ad-modal" class="modal">
+    <div class="modal-content">
+      <p>🌟 Follow Us on Instagram!</p>
+      <p>🙌 Keep Supporting Us by Sharing with Your Friends! </p>
+      <button id="close-ad-btn" class="modal-close-btn" style="display: none;">Close</button>
+    </div>
+  </div>
+  <!-- Unauthorized Activity Modal -->
+  <div id="unauthorized-modal" class="modal">
+    <div class="modal-content">
+      <p id="unauthorized-message">🚫 Unauthorized Activity Detected! 🛑</p>
+      <button id="close-unauthorized-btn" class="modal-close-btn">Close</button>
+    </div>
+  </div>
   <nav class="navbar">
     <div class="navbar-container">
-      <div class="navbar-brand">netra_nandam__</div>
+      <a href=""><div class="navbar-brand">netra_nandam__</div></a>
     </div>
   </nav>
-  <!-- Folder Name Section -->
-  <div class="folder-name">
-   Mounika Mouni 12+ min
-  </div>
   
-  <!-- Main Container for Videos and Images -->
-  <div class="media-wrapper">
-    <div class="video-container">
-      <iframe
-        id="video-iframe"
-        src="https://player.vimeo.com/video/1056985272?h=829c42e769&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-        title="TELUGU COUPLE"
-      ></iframe>
+  <div class="hero-section">
+    <div class="folder-name">
+      Mounika Mouni 12+ min
+    </div>
+    <div class="media-wrapper">
+      <div class="video-container">
+        <iframe
+          id="video-iframe"
+          src="https://player.vimeo.com/video/1056985272?h=829c42e769&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+          title="TELUGU COUPLE"
+        ></iframe>
+      </div>
     </div>
   </div>
   
-  <script src="https://player.vimeo.com/api/player.js"></script>
-  
-    </div>
-  </div>
-
-  <!-- Activity Message Display Container -->
-  <div id="activity-message-container" class="activity-message-container hidden">
-    <div id="activity-message" class="activity-message"></div>
-  </div>
-  
-  <!-- Warning Modal -->
-  <div id="warning-modal" class="modal hidden">
-    <div class="modal-content">
-      <p>⚠️ Unauthorized activity detected! Please do not attempt again.</p>
-      <button id="close-modal">X</button>
-    </div>
-  </div>
-  <!-- Alert Modal -->
-  <div id="alert-modal" class="alert-modal hidden">
-    <div class="alert-modal-content">
-      <p id="alert-message"></p>
-    </div>
-  </div>
-  <!-- Footer with Separate Containers for Firebase and LocalStorage -->
   <footer class="footer">
-    <a id="instagram-link" href="https://instagram.com" target="_blank" class="footer-link">Instagram</a>
-    <a id="another-page-link" href="https://example.com" target="_blank" class="footer-link">Visit Another Page</a>
+    <div class="footer-content">
+      <a id="instagram-link" href="https://instagram.com" target="_blank" class="footer-link">
+        <i class="fab fa-instagram"></i> Follow on Instagram
+      </a>
+      <p class="footer-text">© 2025 Feast_For_Eyes. All rights reserved.</p>
+    </div>
   </footer>
+  <script src="https://player.vimeo.com/api/player.js"></script>
   <script src="script.js"></script>
+  
   <!-- Firebase Initialization and Tracking Script -->
   <script type="module">
     // Import Firebase modules
