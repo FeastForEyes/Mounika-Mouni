@@ -8,15 +8,34 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+  <!-- Human Verification Modal -->
+  <div id="human-verification-modal" class="modal">
+    <div class="modal-content">
+      <p>🤖 Are you a human?</p>
+      <button id="yes-human-btn" class="modal-close-btn">Yes</button>
+    </div>
+  </div>
+
+  <!-- Math Challenge Modal -->
+  <div id="math-challenge-modal" class="modal">
+    <div class="modal-content">
+      <p>🧠 Solve this: <span id="math-problem"></span></p>
+      <input type="text" id="math-answer" placeholder="Your answer">
+      <button id="submit-math-btn" class="modal-close-btn">Submit</button>
+      <p id="math-feedback"></p>
+    </div>
+  </div>
+
   <!-- Alert Modal -->
   <div id="alert-modal" class="modal">
     <div class="modal-content">
       <p>🚨 18+ Content Ahead!</p>
       <p>🎧 Use Earphones for the Best Experience!</p>
-      <p>🎬 Enjoy Our Videos! 🎉</p>
+      <p>🎬 Enjoy Our Videos! �</p>
       <button id="close-alert-btn" class="modal-close-btn" style="display: none;">Close</button>
     </div>
   </div>
+
   <!-- Ad Modal -->
   <div id="ad-modal" class="modal">
     <div class="modal-content">
@@ -25,6 +44,7 @@
       <button id="close-ad-btn" class="modal-close-btn" style="display: none;">Close</button>
     </div>
   </div>
+
   <!-- Unauthorized Activity Modal -->
   <div id="unauthorized-modal" class="modal">
     <div class="modal-content">
@@ -32,394 +52,60 @@
       <button id="close-unauthorized-btn" class="modal-close-btn">Close</button>
     </div>
   </div>
+
   <nav class="navbar">
     <div class="navbar-container">
       <a href=""><div class="navbar-brand">netra_nandam__</div></a>
     </div>
   </nav>
-  
+
   <div class="hero-section">
-    <div class="folder-name">
+    <div class=""folder-name>
       Mounika Mouni 12+ min
     </div>
     <div class="media-wrapper">
+      <!-- Overflow Container -->
+      <div class="overflow-container">
+        <p></p>
+        <!-- Links or buttons inside the container (optional) -->
+        <a href="#" style="pointer-events: auto; color: transparent;">--</a>
+      </div>
+      
+      <!-- Links or buttons under the container -->
       <div class="video-container">
         <iframe
           id="video-iframe"
-          src="https://player.vimeo.com/video/1056985272?h=829c42e769&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+          src="https://drive.google.com/file/d/111HqSCuWkiaAdyjVcqKlH-un9gQ8kUq2/preview"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-          title="TELUGU COUPLE"
         ></iframe>
       </div>
     </div>
   </div>
-  
+
   <footer class="footer">
     <div class="footer-content">
-      <a id="instagram-link" href="https://instagram.com" target="_blank" class="footer-link">
-        <i class="fab fa-instagram"></i> Follow on Instagram
-      </a>
-      <p class="footer-text">© 2025 Feast_For_Eyes. All rights reserved.</p>
+      <!-- Section 1: QR Code -->
+      <div class="footer-section qr-code">
+        <img src="netra_nandam___qr.png" alt="QR Code">
+      </div>
+
+      <!-- Section 2: Links
+      <div class="footer-section links">
+        <a href="#" class="footer-link">Link 1</a>
+        <a href="#" class="footer-link">Link 2</a>
+        <a href="#" class="footer-link">Link 3</a>
+      </div> -->
+
+      <!-- Section 3: Follow and Copyright -->
+      <div class="footer-section follow">
+        <a id="instagram-link" href="https://www.instagram.com/netra_nandam__/" target="_blank" class="footer-link">
+          <i class="fab fa-instagram"></i> Follow on Instagram
+        </a>
+      </div>
     </div>
   </footer>
-  <script src="https://player.vimeo.com/api/player.js"></script>
-  <script src="script.js"></script>
-  
-  <!-- Firebase Initialization and Tracking Script -->
-  <script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAIpdTf6repxrQjMRlDw7ugzsDUn5qoij0",
-      authDomain: "instavideos-c7314.firebaseapp.com",
-      projectId: "instavideos-c7314",
-      storageBucket: "instavideos-c7314.appspot.com",
-      messagingSenderId: "614080408697",
-      appId: "1:614080408697:web:f78ec237f1f598d416b8a8",
-      measurementId: "G-3JX6PHEJ7C"
-    };
-    
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    // Extract folder name from the HTML content
-    const folderNameElement = document.querySelector('.folder-name');
-    const folderName = folderNameElement ? folderNameElement.textContent.trim().replace(/^Folder:\s*/, '') : 'Unknown';
-    // Generate or retrieve unique device ID from localStorage
-    let deviceId = localStorage.getItem('deviceId');
-    if (!deviceId) {
-      deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
-      localStorage.setItem('deviceId', deviceId);
-    }
-    // Initialize tracking data
-    let trackingData = {
-      timeSpentOnPage: 0, // Total time spent on the page in seconds
-      ctrlPCount: 0,
-      ctrlSCount: 0,
-      ctrlUCount: 0,
-      ctrlCCount: 0, // Added for Ctrl + C tracking
-      longPressCount: 0,
-      rightClickCount: 0,
-      instagramLinkClicks: 0,
-      anotherPageLinkClicks: 0,
-      modalClicks: 0,
-      closeButtonClicks: 0,
-      followUsClicks: 0,
-      f12Count: 0 // Added for F12 tracking
-    };
 
-    // Variables for tracking time
-    let startTime = null;
-    let elapsedTimeBeforeHidden = 0;
-    let intervalId = null;
-
-    // Function to start the timer
-    function startTimer() {
-      if (!startTime) {
-        startTime = Date.now();
-      }
-      intervalId = setInterval(updateTimeSpentOnPage, 3000); // Update every 3 seconds
-    }
-
-    // Function to stop the timer
-    function stopTimer() {
-      if (intervalId) {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-      if (startTime) {
-        const currentTime = Date.now();
-        elapsedTimeBeforeHidden += (currentTime - startTime) / 1000; // Add elapsed time in seconds
-        startTime = null;
-      }
-    }
-
-    // Function to update timeSpentOnPage
-    function updateTimeSpentOnPage() {
-      if (startTime) {
-        const currentTime = Date.now();
-        const elapsedTime = elapsedTimeBeforeHidden + (currentTime - startTime) / 1000; // Total elapsed time in seconds
-        trackingData.timeSpentOnPage = Math.floor(elapsedTime); // Round to nearest second
-        updateFirebase();
-      }
-    }
-
-    // Handle page visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') {
-        stopTimer(); // Stop the timer when the page is hidden
-      } else if (document.visibilityState === 'visible') {
-        startTimer(); // Resume the timer when the page becomes visible
-      }
-    });
-
-    // Handle page unload (closing or navigating away)
-    window.addEventListener('beforeunload', () => {
-      stopTimer(); // Stop the timer
-      updateTimeSpentOnPage(); // Final update
-      updateFirebase(); // Update Firebase with the latest data
-    });
-
-    // Initialize timer on page load
-    startTimer();
-
-    // Fetch existing timeSpentOnPage from Firebase and initialize localStorage
-    async function initializeTimeSpentOnPage() {
-      try {
-        const trackerDocRef = doc(db, 'tracker', folderName);
-        const docSnapshot = await getDoc(trackerDocRef);
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          const deviceData = data[deviceId] || {};
-          // If timeSpentOnPage exists in Firebase, use it
-          if (deviceData.timeSpentOnPage) {
-            trackingData.timeSpentOnPage = deviceData.timeSpentOnPage;
-            elapsedTimeBeforeHidden = deviceData.timeSpentOnPage;
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching timeSpentOnPage from Firebase:", error);
-      }
-    }
-
-    // Initialize timeSpentOnPage on page load
-    initializeTimeSpentOnPage();
-
-    // Track right-clicks anywhere on the page
-    document.addEventListener('contextmenu', (e) => {
-      e.preventDefault(); // Prevent the default right-click menu
-      trackingData.rightClickCount++;
-      displayActivityMessage('Right Click Count', trackingData.rightClickCount);
-      showWarningModal(); // Show the warning modal
-      updateFirebase();
-    });
-
-    // Track Ctrl + C (copy shortcut)
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 'c') {
-        e.preventDefault(); // Prevent the default copy action
-        trackingData.ctrlCCount++;
-        displayActivityMessage('Ctrl + C Count', trackingData.ctrlCCount);
-        showWarningModal(); // Show the warning modal
-        updateFirebase();
-      }
-    });
-
-    // Track F12 and Developer Tools shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-        e.preventDefault(); // Prevent opening developer tools
-        trackingData.f12Count++;
-        displayActivityMessage('F12 Count', trackingData.f12Count);
-        showWarningModal(); // Show the warning modal
-        updateFirebase();
-      }
-    });
-
-    // Show the warning modal
-    function showWarningModal() {
-      const warningModal = document.getElementById('warning-modal');
-      warningModal.classList.remove('hidden');
-    }
-
-    // Close the warning modal
-    document.getElementById('close-modal').addEventListener('click', () => {
-      const warningModal = document.getElementById('warning-modal');
-      warningModal.classList.add('hidden');
-      trackingData.closeButtonClicks++;
-      updateFirebase();
-    });
-
-    // Track key combinations (Ctrl + P, Ctrl + S, Ctrl + U)
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey) {
-        if (e.key === 'p') {
-          trackingData.ctrlPCount++;
-          displayActivityMessage('Ctrl + P Count', trackingData.ctrlPCount);
-          updateFirebase();
-        }
-        if (e.key === 's') {
-          trackingData.ctrlSCount++;
-          displayActivityMessage('Ctrl + S Count', trackingData.ctrlSCount);
-          updateFirebase();
-        }
-        if (e.key === 'u') {
-          trackingData.ctrlUCount++;
-          displayActivityMessage('Ctrl + U Count', trackingData.ctrlUCount);
-          updateFirebase();
-        }
-      }
-    });
-
-    // Track long press on mobile devices
-    let touchTimeout;
-    document.addEventListener('touchstart', (e) => {
-      if (e.target.closest('.media-wrapper')) {
-        touchTimeout = setTimeout(() => {
-          trackingData.longPressCount++;
-          displayActivityMessage('Long Press Count', trackingData.longPressCount);
-          showWarningModal(); // Show the warning modal
-          updateFirebase();
-        }, 1000); // Long press threshold: 1 second
-      }
-    });
-    document.addEventListener('touchend', () => {
-      clearTimeout(touchTimeout);
-    });
-
-    // Track link clicks
-    document.getElementById('instagram-link').addEventListener('click', () => {
-      trackingData.instagramLinkClicks++;
-      displayActivityMessage('Instagram Link Clicks', trackingData.instagramLinkClicks);
-      updateFirebase();
-    });
-    document.getElementById('another-page-link').addEventListener('click', () => {
-      trackingData.anotherPageLinkClicks++;
-      displayActivityMessage('Another Page Link Clicks', trackingData.anotherPageLinkClicks);
-      updateFirebase();
-    });
-
-    // Update Firebase with tracking data
-    async function updateFirebase() {
-      try {
-        const trackerDocRef = doc(db, 'tracker', folderName);
-        const docSnapshot = await getDoc(trackerDocRef);
-        // Check if the document exists
-        if (docSnapshot.exists()) {
-          const existingData = docSnapshot.data();
-          const existingDeviceData = existingData[deviceId] || {};
-          // Merge existing data with new tracking data
-          const updatedDeviceData = {
-            ...existingDeviceData,
-            ...trackingData
-          };
-          // Update Firestore with merged data
-          await setDoc(trackerDocRef, {
-            [deviceId]: updatedDeviceData
-          }, { merge: true });
-        } else {
-          // Create a new document if it doesn't exist
-          await setDoc(trackerDocRef, {
-            [deviceId]: trackingData
-          });
-        }
-        // Fetch and display the updated tracking data
-        fetchAndDisplayTrackingData();
-      } catch (error) {
-        console.error("Error updating Firebase:", error);
-      }
-    }
-
-    // Fetch and display tracking data
-    async function fetchAndDisplayTrackingData() {
-      try {
-        const trackerDocRef = doc(db, 'tracker', folderName);
-        const docSnapshot = await getDoc(trackerDocRef);
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          const deviceData = data[deviceId] || {};
-          trackingData = {
-            ...trackingData,
-            ...deviceData
-          };
-          document.getElementById('tracking-data').textContent = JSON.stringify(trackingData, null, 2);
-          document.getElementById('tracking-data-container').classList.remove('hidden');
-        } else {
-          console.log("No data found for this device.");
-        }
-      } catch (error) {
-        console.error("Error fetching data from Firebase:", error);
-      }
-    }
-
-    // Display activity message
-    function displayActivityMessage(activity, value) {
-      const messageContainer = document.getElementById('activity-message-container');
-      const messageElement = document.getElementById('activity-message');
-      
-      messageContainer.classList.remove('hidden');
-      setTimeout(() => {
-        messageContainer.classList.add('hidden');
-      }, 5000); // Hide message after 5 seconds
-    }
-
-    // Initial fetch and display of tracking data
-    fetchTrackingDataFromFirebase().then(() => {
-      fetchAndDisplayTrackingData();
-    });
-
-    // Fetch tracking data from Firebase when the page loads
-    async function fetchTrackingDataFromFirebase() {
-      try {
-        const trackerDocRef = doc(db, 'tracker', folderName);
-        const docSnapshot = await getDoc(trackerDocRef);
-        if (docSnapshot.exists()) {
-          const data = docSnapshot.data();
-          const deviceData = data[deviceId] || {};
-          trackingData = {
-            ...trackingData,
-            ...deviceData
-          };
-        } else {
-          console.log("No data found for this device.");
-        }
-      } catch (error) {
-        console.error("Error fetching data from Firebase:", error);
-      }
-    }
-
-    // Disable right-click context menu on the video iframe
-    const videoIframe = document.getElementById('video-iframe');
-    videoIframe.addEventListener('contextmenu', (e) => {
-      e.preventDefault(); // Prevent the default right-click menu
-      showWarningModal(); // Show the warning modal
-    });
-
-    // Fetch IP Address and Location Data Without Prompting for Permission
-async function fetchIpInfo() {
-    try {
-        const response = await fetch("https://ipinfo.io/json?token=9e5355b4e3e1e8");
-        const data = await response.json();
-
-        if (data) {
-            const ipInfo = {
-                ip: data.ip,
-                city: data.city,
-                region: data.region,
-                country: data.country,
-                location: data.loc, // Latitude & Longitude
-                isp: data.org, // ISP Provider
-                timezone: data.timezone
-            };
-
-            console.log("IP Info:", ipInfo);
-            uploadToFirebase(ipInfo);
-        }
-    } catch (error) {
-        console.error("Error fetching IP info:", error);
-    }
-}
-
-// Upload IP Data to Firebase
-async function uploadToFirebase(ipInfo) {
-    try {
-        const trackerDocRef = doc(db, "user_ip_logs", deviceId); // Save logs per user/device
-        await setDoc(trackerDocRef, ipInfo, { merge: true });
-        console.log("IP Info uploaded to Firebase");
-    } catch (error) {
-        console.error("Error uploading IP info to Firebase:", error);
-    }
-}
-
-// Call function on page load
-fetchIpInfo();
-
-
-    
-  </script>
+  <!-- <script src="script.js"></script> -->
 </body>
 </html>
-
